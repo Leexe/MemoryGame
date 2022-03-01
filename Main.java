@@ -5,7 +5,7 @@
  * After wathcing the memory strings appear in the buttons one at a time, the
  * player recreates the sequence from memory.
  */
-public class MemoryGame
+public class Main
 {
   public static void main(String[] args) {
 
