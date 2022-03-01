@@ -12,24 +12,31 @@ public class Main
     // Create the "memory strings" - an array of single character strings to 
     // show in the buttons, one element at a time. This is the sequence
     // the player will have to remember.
+    MemoryGameGUI game = new MemoryGameGUI();
+    String[] memoryStr = {"y", "x", "b"};
 
     // Create the game and gameboard. Configure a randomized board with 3 buttons.
     // (Later, you can change options to configure more or less buttons
     // and turn randomization on or off.)
+    game.createBoard(3, true);
 
     // Play the game until user wants to quit.
   
       // Create a new array that will contain the randomly ordered memory strings.
+      String[] tempMemoryStr;
 
       // Create a list of randomly ordered integers with no repeats, the length
       // of memory strings. Use it to create a random sequence of the memory strings.
       // - OR -
       // Overload the next method in RandomPermutation to create a random sequence 
       // of the memory strings, passed as a parameter.
+      tempMemoryStr = RandomPermutation.next(memoryStr);
 
       // Play one sequence, delaying half a second for the strings to show
       // in the buttons. Save the player's guess. 
       // (Later, you can speed up or slow down the game.)
+      game.playSequence(memoryStr, 1);
+      
 
       // Determine if player's guess matches all elements of the random sequence.
       
