@@ -14,6 +14,10 @@ public class Main
     // the player will have to remember.
     MemoryGameGUI game = new MemoryGameGUI();
     String[] memoryStr = {"y", "x", "b"};
+    int score = 0;
+    int games = 0;
+    String guess = "";
+    String sequence = "";
 
     // Create the game and gameboard. Configure a randomized board with 3 buttons.
     // (Later, you can change options to configure more or less buttons
@@ -35,21 +39,30 @@ public class Main
       // Play one sequence, delaying half a second for the strings to show
       // in the buttons. Save the player's guess. 
       // (Later, you can speed up or slow down the game.)
-      game.playSequence(memoryStr, 1);
-      
+      guess = game.playSequence(memoryStr, 0.5);
 
       // Determine if player's guess matches all elements of the random sequence.
-      
         // Cleanup the guess - remove commas and spaces. Refer to a new String method 
         // replace to make this easy.
+        for (String str : tempMemoryStr) {
+          sequence += str;
+        }
         
         // iterate to determine if guess matches sequence
-
         // If match, increase score, and signal a match, otherwise, try again.
-
-      // Ask if user wants to play another round of the game 
-      // and track the number of games played.
-   
+        if (guess == sequence) {
+          score++;
+          games++;
+          game.playAgain();
+        }
+        // Ask if user wants to play another round of the game 
+        // and track the number of games played.
+        else {
+          game.tryAgain();
+        }
+    
     // When done playing, show score and end the game.
+    game.showScore(score, games);
+    game.quit();
   }
 }
