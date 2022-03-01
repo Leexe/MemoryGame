@@ -7,62 +7,52 @@
  */
 public class Main
 {
-  public static void main(String[] args) {
+  // Variables
+  private String[] memoryStr = {"y", "x", "b"};
+  private String[] tempMemoryStr = {};
+  private int score = 0;
+  private int games = 0;
+  private String guess = "";
+  private String sequence = "";
 
-    // Create the "memory strings" - an array of single character strings to 
-    // show in the buttons, one element at a time. This is the sequence
-    // the player will have to remember.
-    MemoryGameGUI game = new MemoryGameGUI();
-    String[] memoryStr = {"y", "x", "b"};
-    int score = 0;
-    int games = 0;
-    String guess = "";
-    String sequence = "";
-
-    // Create the game and gameboard. Configure a randomized board with 3 buttons.
-    // (Later, you can change options to configure more or less buttons
-    // and turn randomization on or off.)
-    game.createBoard(3, true);
-
-    // Play the game until user wants to quit.
-  
-      // Create a new array that will contain the randomly ordered memory strings.
-      String[] tempMemoryStr;
-
-      // Create a list of randomly ordered integers with no repeats, the length
-      // of memory strings. Use it to create a random sequence of the memory strings.
-      // - OR -
-      // Overload the next method in RandomPermutation to create a random sequence 
-      // of the memory strings, passed as a parameter.
-      tempMemoryStr = RandomPermutation.next(memoryStr);
-
-      // Play one sequence, delaying half a second for the strings to show
-      // in the buttons. Save the player's guess. 
-      // (Later, you can speed up or slow down the game.)
-      guess = game.playSequence(memoryStr, 0.5);
-
-      // Determine if player's guess matches all elements of the random sequence.
-        // Cleanup the guess - remove commas and spaces. Refer to a new String method 
-        // replace to make this easy.
-        for (String str : tempMemoryStr) {
-          sequence += str;
-        }
-        
-        // iterate to determine if guess matches sequence
-        // If match, increase score, and signal a match, otherwise, try again.
-        if (guess == sequence) {
-          score++;
-          games++;
-          game.playAgain();
-        }
-        // Ask if user wants to play another round of the game 
-        // and track the number of games played.
-        else {
-          game.tryAgain();
-        }
-    
-    // When done playing, show score and end the game.
+  // End game method
+  public void endGame(int score, int games){
     game.showScore(score, games);
     game.quit();
+  }
+
+  // Main Method
+  public static void main(String[] args) {
+    MemoryGameGUI game = new MemoryGameGUI();
+    Main world = new Main();
+    
+    // Randomizes the string list into a new list
+    world.tempMemoryStr = RandomPermutation.next(world.memoryStr);
+
+    // Adds all of the items in the list into a string
+    for (String str : world.tempMemoryStr) {
+      world.sequence += str;
+    }
+
+    // Creates a new game instance
+    world.guess = game.playSequence(world.tempMemoryStr, 0.5);
+
+    // If the player guesses the sequence correct, add score & game
+    if (world.guess == world.sequence) {
+      world.score++;
+      world.games++;
+    }
+    // Else ask the player to try again  
+    else {
+      game.tryAgain();
+    }
+
+    // Creates a try again
+    if (game.playAgain() == true) {
+      world.guess = game.playSequence(world.tempMemoryStr, 0.5);
+    }
+    else {
+      world.quit(world.score, world.games);
+    }
   }
 }
