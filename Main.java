@@ -14,9 +14,29 @@ public class Main
   private String[] tempMemoryStr = {};
   private int score = 0;
   private int games = 0;
+  private double speedLevel = 0;
+  private double speedOfGame = 0;
   private String guess = "";
   private String sequence = "";
+  private Boolean gameOn = true;
 
+  // Speeds up the time the letters shows up
+  public double speedUpGame(double level) {
+    // Debug
+    // System.out.println("Level:" + level);
+    // System.out.println("Speed:" + (1.0/4.0/(level*0.5)/4+0.1));
+    return (1.0/2.0/(level*0.5)/4+0.1);
+  }
+
+  // Combines all of the strings in a list of strings
+  public String addStringInLists(String[] strList) {
+    String newString = "";
+    for (String str : strList) {
+      newString += str;
+    }
+    return newString;
+  }
+  
   // Main Method
   public static void main(String[] args) {
     // Objects 
@@ -25,35 +45,45 @@ public class Main
 
     // Randomizes the string list into a new list
     world.tempMemoryStr = RandomPermutation.next(world.memoryStr);
-    // Debug: 
-    System.out.println(Arrays.toString(world.tempMemoryStr));
-
     // Adds all of the items in the list into a string
-    for (String str : world.tempMemoryStr) {
-      world.sequence += str;
-    }
-
+    world.sequence = world.addStringInLists(world.tempMemoryStr);  
+    // Creates a board
+    game.createBoard(3, true);
     // Creates a new game instance
-    world.guess = game.playSequence(world.tempMemoryStr, 0.5);
+    world.speedLevel++;
+    world.speedOfGame = world.speedUpGame(world.speedLevel);
+    world.guess = game.playSequence(world.tempMemoryStr, world.speedOfGame);
+    // Debug: System.out.println(world.guess);
 
-    // If the player guesses the sequence correct, add score & game
-    if (world.guess == world.sequence) {
-      world.score++;
-      world.games++;
-    }
-    // Else ask the player to try again  
-    else {
-      game.tryAgain();
-    }
+    while (world.gameOn == true) {
+      // If the player guesses the sequence correct, add score & game
+      if (world.guess != null && world.guess.equals(world.sequence)) {
+        game.matched();
+        world.score++;
+        world.games++;
+      }
+      // Else ask the player to try again  
+      else {
+        world.games++;
+        game.tryAgain();
+      }
 
-    // Creates a try again screen; if yes, replay game
-    if (game.playAgain() == true) {
-      world.guess = game.playSequence(world.tempMemoryStr, 0.5);
-    }
-    // else, display score and quit the game 
-    else {
-      game.showScore(world.score, world.games);
-      game.quit();
+      // Creates a try again screen; if yes, replay game
+      if (game.playAgain() == true) {
+        // Randomizes the new string
+        world.tempMemoryStr = RandomPermutation.next(world.memoryStr);
+        world.sequence = world.addStringInLists(world.tempMemoryStr);
+        // Speeds up game gradually
+        world.speedLevel++;
+        world.speedOfGame = world.speedUpGame(world.speedLevel);
+        world.guess = game.playSequence(world.tempMemoryStr, world.speedOfGame);
+      }
+      // else, display score and quit the game 
+      else {
+        game.showScore(world.score, world.games);
+        game.quit();
+        world.gameOn = false;
+      }
     }
   }
 }
