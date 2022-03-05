@@ -22,10 +22,11 @@ public class Main
 
   // Speeds up the time the letters shows up
   public double speedUpGame(double level) {
+    double speed = 1.0/4.0/(level)+0.125;
     // Debug
     // System.out.println("Level:" + level);
-    // System.out.println("Speed:" + (1.0/4.0/(level*0.5)/4+0.1));
-    return (1.0/2.0/(level*0.5)/4+0.1);
+    // System.out.println("Speed:" + speed);
+    return speed;
   }
 
   // Combines all of the strings in a list of strings
@@ -61,6 +62,9 @@ public class Main
         game.matched();
         world.score++;
         world.games++;
+        // Speeds up game gradually
+        world.speedLevel++;
+        world.speedOfGame = world.speedUpGame(world.speedLevel);
       }
       // Else ask the player to try again  
       else {
@@ -73,9 +77,6 @@ public class Main
         // Randomizes the new string
         world.tempMemoryStr = RandomPermutation.next(world.memoryStr);
         world.sequence = world.addStringInLists(world.tempMemoryStr);
-        // Speeds up game gradually
-        world.speedLevel++;
-        world.speedOfGame = world.speedUpGame(world.speedLevel);
         world.guess = game.playSequence(world.tempMemoryStr, world.speedOfGame);
       }
       // else, display score and quit the game 
