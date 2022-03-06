@@ -1,7 +1,7 @@
 /**********************************************************************
 * Sample solution for Activity 3.6.2
 **********************************************************************/
- 
+import java.util.Random;
 /**
 * Generate random permutations of integers
 */
@@ -60,6 +60,17 @@ public class RandomPermutation
             }
             // debug: System.out.println(java.util.Arrays.toString(r));
             return r;
+    }
+
+    public static String[] RandomLetter(int numberOfLetters) 
+    {
+          Random r = new Random();
+          String[] randomList = new String[numberOfLetters];
+          for (int x=0; x < randomList.length; x++) 
+          {
+              randomList[x] = String.valueOf((char)(r.nextInt(26)+ 'a'));
+          }
+          return randomList;
     }
 }
 

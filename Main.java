@@ -22,7 +22,7 @@ public class Main
 
   // Speeds up the time the letters shows up
   public double speedUpGame(double level) {
-    double speed = 1.0/4.0/(level)+0.125;
+    double speed = 1.0/3.0/(level)+0.15;
     // Debug
     // System.out.println("Level:" + level);
     // System.out.println("Speed:" + speed);
@@ -45,7 +45,7 @@ public class Main
     Main world = new Main();
 
     // Randomizes the string list into a new list
-    world.tempMemoryStr = RandomPermutation.next(world.memoryStr);
+    world.tempMemoryStr = RandomPermutation.next(RandomPermutation.RandomLetter(3));
     // Adds all of the items in the list into a string
     world.sequence = world.addStringInLists(world.tempMemoryStr);  
     // Creates a board
@@ -75,7 +75,7 @@ public class Main
       // Creates a try again screen; if yes, replay game
       if (game.playAgain() == true) {
         // Randomizes the new string
-        world.tempMemoryStr = RandomPermutation.next(world.memoryStr);
+        world.tempMemoryStr = RandomPermutation.next(RandomPermutation.RandomLetter(3));
         world.sequence = world.addStringInLists(world.tempMemoryStr);
         world.guess = game.playSequence(world.tempMemoryStr, world.speedOfGame);
       }
