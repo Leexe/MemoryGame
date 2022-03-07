@@ -53,7 +53,7 @@ public class Main
     // Adds all of the items in the list into a string
     world.sequence = world.addStringInLists(world.tempMemoryStr);  
     // Creates a board
-    game.createBoard(3, true);
+    game.createBoard(5, true);
     // Creates a new game instance
     world.speedOfGame = world.speedUpGame(world.score + 1);
     world.guess = game.playSequence(world.tempMemoryStr, world.speedOfGame);
