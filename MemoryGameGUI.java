@@ -90,7 +90,6 @@ public class MemoryGameGUI extends JFrame
   public String playSequence(String[] sequence, double delay)
   {
     delay *= 1000;
-    JOptionPane.showMessageDialog(this, "Click when ready!", "Ready to Play?", JOptionPane.PLAIN_MESSAGE);
 
     // show each memory strings on a botton
     int buttonNum = -1; 
