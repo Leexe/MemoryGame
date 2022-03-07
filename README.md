@@ -9,10 +9,11 @@ Memory game is a simple game made from java that tests the player on their memor
 
 ## Design Showcase:
 - [Slides][1]
-- [Video][2]
+- Video:
+[![Video](https://img.youtube.com/vi/lnyMVwwr-nU/maxresdefault.jpg)](https://youtu.be/lnyMVwwr-nU "Video Title")
 
 ## Team Members:
 Tuan L & Amrith K
 
 [1]: https://docs.google.com/presentation/d/16mJJ_0DWCrazjcxCLKBQbrW3wmIRLTL21gTXpqpGl6U/edit?usp=sharing "Slides"
-[2]: "https://youtu.be/s5DH38eaoEE" "Video"
+[2]: "https://youtu.be/lnyMVwwr-nU" "Video"
