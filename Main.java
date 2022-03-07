@@ -5,17 +5,15 @@
  * After wathcing the memory strings appear in the buttons one at a time, the
  * player recreates the sequence from memory.
  */
-import java.util.*;
-
 public class Main
 {
   // Variables
-  private String[] memoryStr = {"y", "x", "b"};
   private String[] tempMemoryStr = {};
   private int score = 0;
   private int games = 0;
-  private double speedLevel = 0;
   private double speedOfGame = 0;
+  private int lettersToGuess = 3;
+  private static int lettersLimit = 5;
   private String guess = "";
   private String sequence = "";
   private Boolean gameOn = true;
@@ -29,6 +27,13 @@ public class Main
     return speed;
   }
 
+  // Control the amount of letters that the player has to guess
+  public void extendLetters() {
+    if (lettersToGuess < lettersLimit && score % 5 == 0) {
+      lettersToGuess++;
+    }
+  }
+
   // Combines all of the strings in a list of strings
   public String addStringInLists(String[] strList) {
     String newString = "";
@@ -37,8 +42,7 @@ public class Main
     }
     return newString;
   }
-  
-  // Main Method
+
   public static void main(String[] args) {
     // Objects 
     MemoryGameGUI game = new MemoryGameGUI();
@@ -51,8 +55,7 @@ public class Main
     // Creates a board
     game.createBoard(3, true);
     // Creates a new game instance
-    world.speedLevel++;
-    world.speedOfGame = world.speedUpGame(world.speedLevel);
+    world.speedOfGame = world.speedUpGame(world.score + 1);
     world.guess = game.playSequence(world.tempMemoryStr, world.speedOfGame);
     // Debug: System.out.println(world.guess);
 
@@ -63,8 +66,9 @@ public class Main
         world.score++;
         world.games++;
         // Speeds up game gradually
-        world.speedLevel++;
-        world.speedOfGame = world.speedUpGame(world.speedLevel);
+        world.speedOfGame = world.speedUpGame(world.score + 1);
+        // Adds letters gradually
+        world.extendLetters();
       }
       // Else ask the player to try again  
       else {
@@ -75,7 +79,7 @@ public class Main
       // Creates a try again screen; if yes, replay game
       if (game.playAgain() == true) {
         // Randomizes the new string
-        world.tempMemoryStr = RandomPermutation.next(RandomPermutation.RandomLetter(3));
+        world.tempMemoryStr = RandomPermutation.next(RandomPermutation.RandomLetter(world.lettersToGuess));
         world.sequence = world.addStringInLists(world.tempMemoryStr);
         world.guess = game.playSequence(world.tempMemoryStr, world.speedOfGame);
       }
